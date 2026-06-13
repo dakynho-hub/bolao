@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bolão Brasil x Marrocos</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#111;color:#fff;font-family:Arial,sans-serif;padding-bottom:40px}
+.hd{background:linear-gradient(135deg,#009C3B,#002776);padding:20px 16px;text-align:center}
+.hd p{font-size:11px;letter-spacing:3px;color:#FFDF00;margin-bottom:6px}
+.hd h1{font-size:26px;font-weight:900}
+.hd small{display:inline-block;border:1px solid #FFDF00;border-radius:50px;padding:5px 18px;font-size:13px;color:#FFDF00;font-weight:700;margin-top:8px}
+.stats{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:12px 16px;background:#1a1a1a;border-bottom:1px solid #222}
+.st{background:#252525;border:1px solid #333;border-radius:8px;padding:6px 14px;text-align:center;min-width:80px}
+.st b{display:block;font-size:16px;color:#FFDF00}
+.st span{font-size:10px;color:#888}
+.ib{background:#1a1a1a;padding:16px;border-bottom:1px solid #222}
+.ib p{font-size:11px;letter-spacing:2px;color:#666;text-align:center;margin-bottom:12px}
+.sr{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+input[type=number]{width:60px;height:60px;background:#252525;border:2px solid #444;border-radius:10px;color:#fff;font-size:30px;font-weight:700;text-align:center;outline:none}
+button{display:block;width:100%;margin-top:12px;padding:14px;background:#FFDF00;color:#000;border:none;border-radius:10px;font-size:18px;font-weight:900;letter-spacing:2px;cursor:pointer}
+.sl{font-size:10px;letter-spacing:3px;color:#555;text-align:center;padding:14px 0 10px}
+</style>
+</head>
+<body>
+
+<div class="hd">
+  <p>⚽ BOLÃO — COPA DO MUNDO</p>
+  <h1>🇧🇷 Brasil × Marrocos 🇲🇦</h1>
+  <small>💰 R$ 10,00 por participante</small>
+</div>
+
+<div class="stats">
+  <div class="st"><b>13</b><span>Participantes</span></div>
+  <div class="st"><b>R$ 130</b><span>Prêmio total</span></div>
+  <div class="st"><b id="sb">—</b><span>Brasil marcou</span></div>
+  <div class="st"><b id="sm">—</b><span>Marrocos marcou</span></div>
+</div>
+
+<div class="ib">
+  <p>INFORME O PLACAR FINAL</p>
+  <div class="sr">
+    <div style="font-size:15px;font-weight:700;color:#009C3B;min-width:75px;text-align:center">🇧🇷 BRASIL</div>
+    <input type="number" id="gb" min="0" max="20" placeholder="0">
+    <span style="font-size:30px;color:#555">×</span>
+    <input type="number" id="gm" min="0" max="20" placeholder="0">
+    <div style="font-size:15px;font-weight:700;color:#C1121F;min-width:75px;text-align:center">MARROCOS 🇲🇦</div>
+  </div>
+  <button onclick="revelar()">▶ REVELAR VENCEDORES</button>
+</div>
+
+<!-- resultado sempre no DOM, começa transparente -->
+<div id="RB" style="margin:16px;padding:16px;border-radius:14px;text-align:center;background:#1a2e0a;border:2px solid #FFDF00;opacity:0;transition:opacity 0.5s">
+  <div style="font-size:10px;letter-spacing:2px;color:#aaa;margin-bottom:6px">🏆 RESULTADO FINAL</div>
+  <div id="RS" style="font-size:48px;font-weight:900;color:#FFDF00;letter-spacing:4px"> </div>
+  <div id="CH" style="margin-top:10px"> </div>
+</div>
+
+<div class="sl">PALPITES</div>
+
+<div id="cAndressa"  style="display:flex;align-items:center;gap:10px;background:#1a1a1a;border:1px solid #222;border-radius:10px;padding:12px 14px;margin:0 16px 8px"><span style="font-size:11px;color:#555;width:20px">1</span><span style="font-weight:700;font-size:15px;flex:1">Andressa</span><span id="pAndressa" style="font-size:20px;font-weight:900;background:#252525;border-radius:7px;padding:4px 10px;color:#ccc">2×1</span></div>
+<div id="cArthur"    style="display:flex;align-items:center;gap:10px;background:#1a1a1a;border:1px solid #222;border-radius:10px;padding:12px 14px;margin:0 16px 8px"><span style="font-size:11px;color:#555;width:20px">2</span><span style="font-weight:700;font-size:15px;flex:1">Arthur</span><span id="pArthur" style="font-size:20px;font-weight:900;background:#252525;border-radius:7px;padding:4px 10px;color:#ccc">3×1</span></div>
+<div id="cDeia"      style="display:flex;align-items:center;gap:10px;background:#1a1a1a;border:1px solid #222;border-radius:10px;padding:12px 14px;margin:0 16px 8px"><span style="font-size:11px;color:#555;width:20px">3</span><span style="font-weight:700;font-size:15px;flex:1">Deia</span><span id="pDeia" style="font-size:20px;font-weight:900;background:#252525;border-radius:7px;padding:4px 10px;color:#ccc">2×0</span></div>
+<div id="cElaine"    style="display:flex;align-items:center;gap:10px;background:#1a1a1a;border:1px solid #222;border-radius:10px;padding:12px 14px;margin:0 16px 8px"><span style="font-size:11px;color:#555;width:20px">4</span><span style="font-weight:700;font-size:15px;flex:1">Elaine</span><span id="pElaine" style="font-size:20px;font-weight:900;background:#252525;border-radius:7px;padding:4px 10px;color:#ccc">2×1</span></div>
+<div id="cEllen"     style="display:flex;align-items:center;gap:10px;background:#1a1a1a;border:1px solid #222;border-radius:10px;padding:12px 14px;margin:0 16px 8px"><span style="font-size:11px;color:#555;width:20px">5</span><span style="font-weight:700;font-size:15px;flex:1">Ellen</span><span id="pEllen" style="font-size:20px;font-weight:900;background:#252525;border-radius:7px;padding:4px 10px;color:#ccc">3×0</span></div>
+<div id="cJosadaque" style="display:flex;align-items:center;gap:10px;background:#1a1a1a;border:1px solid #222;border-radius:10px;padding:12px 14px;margin:0 16px 8px"><span style="font-size:11px;color:#555;width:20px">6</span><span style="font-weight:700;font-size:15px;flex:1">Josadaque</span><span id="pJosadaque" style="font-size:20px;font-weight:900;background:#252525;border-radius:7px;padding:4px 10px;color:#ccc">1×1</span></div>
+<div id="cKayky"     style="display:flex;align-items:center;gap:10px;background:#1a1a1a;border:1px solid #222;border-radius:10px;padding:12px 14px;margin:0 16px 8px"><span style="font-size:11px;color:#555;width:20px">7</span><span style="font-weight:700;font-size:15px;flex:1">Kayky</span><span id="pKayky" style="font-size:20px;font-weight:900;background:#252525;border-radius:7px;padding:4px 10px;color:#ccc">3×1</span></div>
+<div id="cKetlyn"    style="display:flex;align-items:center;gap:10px;background:#1a1a1a;border:1px solid #222;border-radius:10px;padding:12px 14px;margin:0 16px 8px"><span style="font-size:11px;color:#555;width:20px">8</span><span style="font-weight:700;font-size:15px;flex:1">Ketlyn</span><span id="pKetlyn" style="font-size:20px;font-weight:900;background:#252525;border-radius:7px;padding:4px 10px;color:#ccc">5×2</span></div>
+<div id="cLucas"     style="display:flex;align-items:center;gap:10px;background:#1a1a1a;border:1px solid #222;border-radius:10px;padding:12px 14px;margin:0 16px 8px"><span style="font-size:11px;color:#555;width:20px">9</span><span style="font-weight:700;font-size:15px;flex:1">Lucas</span><span id="pLucas" style="font-size:20px;font-weight:900;background:#252525;border-radius:7px;padding:4px 10px;color:#ccc">3×0</span></div>
+<div id="cPatrick"   style="display:flex;align-items:center;gap:10px;background:#1a1a1a;border:1px solid #222;border-radius:10px;padding:12px 14px;margin:0 16px 8px"><span style="font-size:11px;color:#555;width:20px">10</span><span style="font-weight:700;font-size:15px;flex:1">Patrick</span><span id="pPatrick" style="font-size:20px;font-weight:900;background:#252525;border-radius:7px;padding:4px 10px;color:#ccc">2×0</span></div>
+<div id="cRadson"    style="display:flex;align-items:center;gap:10px;background:#1a1a1a;border:1px solid #222;border-radius:10px;padding:12px 14px;margin:0 16px 8px"><span style="font-size:11px;color:#555;width:20px">11</span><span style="font-weight:700;font-size:15px;flex:1">Radson</span><span id="pRadson" style="font-size:20px;font-weight:900;background:#252525;border-radius:7px;padding:4px 10px;color:#ccc">2×0</span></div>
+<div id="cRodrigo"   style="display:flex;align-items:center;gap:10px;background:#1a1a1a;border:1px solid #222;border-radius:10px;padding:12px 14px;margin:0 16px 8px"><span style="font-size:11px;color:#555;width:20px">12</span><span style="font-weight:700;font-size:15px;flex:1">Rodrigo</span><span id="pRodrigo" style="font-size:20px;font-weight:900;background:#252525;border-radius:7px;padding:4px 10px;color:#ccc">4×0</span></div>
+<div id="cStefany"   style="display:flex;align-items:center;gap:10px;background:#1a1a1a;border:1px solid #222;border-radius:10px;padding:12px 14px;margin:0 16px 8px"><span style="font-size:11px;color:#555;width:20px">13</span><span style="font-weight:700;font-size:15px;flex:1">Stefany</span><span id="pStefany" style="font-size:20px;font-weight:900;background:#252525;border-radius:7px;padding:4px 10px;color:#ccc">2×1</span></div>
+
+<script>
+var D=[
+  {n:"Andressa",b:2,m:1},{n:"Arthur",b:3,m:1},{n:"Deia",b:2,m:0},
+  {n:"Elaine",b:2,m:1},{n:"Ellen",b:3,m:0},{n:"Josadaque",b:1,m:1},
+  {n:"Kayky",b:3,m:1},{n:"Ketlyn",b:5,m:2},{n:"Lucas",b:3,m:0},
+  {n:"Patrick",b:2,m:0},{n:"Radson",b:2,m:0},{n:"Rodrigo",b:4,m:0},
+  {n:"Stefany",b:2,m:1}
+];
+function res(b,m){return b>m?1:b<m?-1:0}
+function revelar(){
+  var gb=document.getElementById("gb").value;
+  var gm=document.getElementById("gm").value;
+  if(gb===""||gm===""){alert("Informe o placar!");return}
+  gb=parseInt(gb); gm=parseInt(gm);
+  document.getElementById("sb").textContent=gb;
+  document.getElementById("sm").textContent=gm;
+  document.getElementById("RS").textContent=gb+" x "+gm;
+  document.getElementById("RB").style.opacity="1";
+  var rr=res(gb,gm), ex=[], ce=[];
+  for(var i=0;i<D.length;i++){
+    var p=D[i];
+    var card=document.getElementById("c"+p.n);
+    var pl=document.getElementById("p"+p.n);
+    if(p.b===gb&&p.m===gm){
+      card.style.background="#2e2800";
+      card.style.border="2px solid #FFDF00";
+      card.style.opacity="1";
+      pl.style.color="#FFDF00";
+      pl.style.background="rgba(255,223,0,0.15)";
+      ex.push(p.n);
+    } else if(res(p.b,p.m)===rr){
+      card.style.background="#1a2e0a";
+      card.style.border="2px solid #009C3B";
+      card.style.opacity="1";
+      pl.style.color="#5cdb5c";
+      ce.push(p.n);
+    } else {
+      card.style.opacity="0.25";
+    }
+  }
+  var h="";
+  if(ex.length){
+    h+="<div style='font-size:10px;color:#aaa;margin-bottom:8px;letter-spacing:1px'>🎯 PLACAR EXATO</div>";
+    for(var j=0;j<ex.length;j++) h+="<span style='display:inline-block;background:#FFDF00;color:#000;border-radius:50px;padding:5px 16px;font-size:14px;font-weight:700;margin:3px'>⭐ "+ex[j]+"</span>";
+  } else if(ce.length){
+    h+="<div style='font-size:10px;color:#aaa;margin-bottom:8px;letter-spacing:1px'>✓ ACERTOU O RESULTADO</div>";
+    for(var k=0;k<ce.length;k++) h+="<span style='display:inline-block;background:#009C3B;color:#fff;border-radius:50px;padding:5px 16px;font-size:14px;font-weight:700;margin:3px'>"+ce[k]+"</span>";
+  } else {
+    h="<div style='color:#888;font-size:14px'>Ninguém acertou 😅</div>";
+  }
+  document.getElementById("CH").innerHTML=h;
+}
+</script>
+</body>
+</html>
